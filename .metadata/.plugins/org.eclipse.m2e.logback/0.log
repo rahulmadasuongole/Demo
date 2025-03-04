@@ -1,0 +1,2 @@
+2025-03-04 14:19:55,772 [Worker-2: Loading available Gradle versions] INFO  o.e.b.c.i.u.g.PublishedGradleVersions - Gradle version information cache is not available. Remote download required.
+2025-03-04 14:28:54,322 [Worker-22: https://mirror.umd.edu/eclipse/releases/2023-03/202303151000/plugins/org.eclipse.wst.web.ui.infopop_1.0.300.v201903222120.jar] INFO  o.a.h.c.h.i.c.HttpRequestRetryExec - Recoverable I/O exception (java.net.SocketException) caught when processing request to {s}->https://mirror.umd.edu:443
