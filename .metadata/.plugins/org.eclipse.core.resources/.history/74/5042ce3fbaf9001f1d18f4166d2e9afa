@@ -1,0 +1,40 @@
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+@WebServlet("/email")
+public class email extends HttpServlet {
+    private static final long serialVersionUID = 1L;
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // Retrieve form data
+        String firstname = request.getParameter("firstname"); // Fixed spelling
+        String lastname = request.getParameter("lastname");
+        String email = request.getParameter("email"); // Fixed naming
+        String password = request.getParameter("password");
+        String gender = request.getParameter("gender"); // Added missing gender field
+
+        // Set response content type
+        response.setContentType("text/html");
+        
+        // Create PrintWriter for response
+        PrintWriter out = response.getWriter();
+        out.println("<h2>Registration Successful</h2>");
+        out.println("<p>First Name: " + firstname + "</p>");
+        out.println("<p>Last Name: " + lastname + "</p>");
+        out.println("<p>Email: " + email + "</p>");
+        out.println("<p>Gender: " + gender + "</p>");
+
+        // Login validation
+        if ("rahul".equals(email) && "password".equals(password)) { 
+            out.println("<p>Login successful!</p>");
+        } else {
+            out.println("<p>Invalid login credentials</p>");
+        }
+    }
+}

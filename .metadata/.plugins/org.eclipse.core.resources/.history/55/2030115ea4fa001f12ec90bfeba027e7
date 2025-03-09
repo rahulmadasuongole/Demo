@@ -1,0 +1,111 @@
+package perform;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+@WebServlet("/dashboard")
+public class DashboardServlet extends HttpServlet {
+    private static final long serialVersionUID = 1L;
+
+    // Expected values for validation
+    private static final String EXPECTED_CITY = "ongole";
+    private static final String EXPECTED_STATE = "ap";
+    private static final String EXPECTED_COUNTRY = "india";
+    private static final String EXPECTED_QUALIFICATION = "btech";
+    private static final int EXPECTED_PASSOUT_YEAR = 2023;
+    private static final float EXPECTED_PERCENTAGE = 8.9f;
+    private static final String EXPECTED_FATHER_NAME = "prasadu";
+    private static final String EXPECTED_MOTHER_NAME = "padma";
+    private static final int EXPECTED_SIBLINGS = 2;
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType("text/html");
+        PrintWriter out = response.getWriter();
+
+        String action = request.getParameter("action");
+
+        // Handle Login
+        if ("login".equals(action)) {
+            String email = request.getParameter("email");
+            String password = request.getParameter("password");
+
+            // Dummy credentials for login
+            String validEmail = "admin@example.com";
+            String validPassword = "password123";
+
+            if (validEmail.equals(email) && validPassword.equals(password)) {
+                HttpSession session = request.getSession();
+                session.setAttribute("userEmail", email);
+
+                out.println("<h2 style='color:green;'>✅ Login Successful</h2>");
+                out.println("<a href='dashboard.html'>Go to Dashboard</a>");
+            } else {
+                out.println("<h2 style='color:red;'>❌ Invalid Credentials</h2>");
+                out.println("<a href='login.html'>Try Again</a>");
+            }
+        }
+
+        // Handle Address Submission
+        else if ("address".equals(action)) {
+            String city = request.getParameter("city");
+            String state = request.getParameter("state");
+            String country = request.getParameter("country");
+
+            boolean isValid = EXPECTED_CITY.equalsIgnoreCase(city) &&
+                              EXPECTED_STATE.equalsIgnoreCase(state) &&
+                              EXPECTED_COUNTRY.equalsIgnoreCase(country);
+
+            out.println("<h2>Address Submission</h2>");
+            out.println("<p><strong>City:</strong> " + city + "</p>");
+            out.println("<p><strong>State:</strong> " + state + "</p>");
+            out.println("<p><strong>Country:</strong> " + country + "</p>");
+
+            out.println("<h3>" + (isValid ? "✅ Valid Address!" : "❌ Invalid Address Details!") + "</h3>");
+        }
+
+        // Handle Education Submission
+        else if ("education".equals(action)) {
+            String qualification = request.getParameter("qualification");
+            int passoutYear = Integer.parseInt(request.getParameter("passoutYear"));
+            float percentage = Float.parseFloat(request.getParameter("percentage"));
+
+            boolean isValid = EXPECTED_QUALIFICATION.equalsIgnoreCase(qualification) &&
+                              passoutYear == EXPECTED_PASSOUT_YEAR &&
+                              percentage == EXPECTED_PERCENTAGE;
+
+            out.println("<h2>Education Submission</h2>");
+            out.println("<p><strong>Qualification:</strong> " + qualification + "</p>");
+            out.println("<p><strong>Passout Year:</strong> " + passoutYear + "</p>");
+            out.println("<p><strong>Percentage:</strong> " + percentage + "%</p>");
+
+            out.println("<h3>" + (isValid ? "✅ Valid Education Details!" : "❌ Invalid Education Details!") + "</h3>");
+        }
+
+        // Handle Family Details Submission
+        else if ("family".equals(action)) {
+            String fatherName = request.getParameter("fatherName");
+            String motherName = request.getParameter("motherName");
+            int siblings = Integer.parseInt(request.getParameter("siblings"));
+
+            boolean isValid = EXPECTED_FATHER_NAME.equalsIgnoreCase(fatherName) &&
+                              EXPECTED_MOTHER_NAME.equalsIgnoreCase(motherName) &&
+                              siblings == EXPECTED_SIBLINGS;
+
+            out.println("<h2>Family Details Submission</h2>");
+            out.println("<p><strong>Father's Name:</strong> " + fatherName + "</p>");
+            out.println("<p><strong>Mother's Name:</strong> " + motherName + "</p>");
+            out.println("<p><strong>Number of Siblings:</strong> " + siblings + "</p>");
+
+            out.println("<h3>" + (isValid ? "✅ Valid Family Details!" : "❌ Invalid Family Details!") + "</h3>");
+        }
+
+        out.println("<br><a href='dashboard.html'>Back to Dashboard</a>");
+        out.close();
+    }
+}

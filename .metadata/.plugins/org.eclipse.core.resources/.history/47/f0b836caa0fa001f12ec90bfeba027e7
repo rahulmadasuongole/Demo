@@ -1,0 +1,81 @@
+
+
+
+package perform;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+@WebServlet("/dashboard")
+public class DashboardServlet extends HttpServlet {
+    private static final long serialVersionUID = 1L;
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        
+        // Retrieving Address Information
+        String city = request.getParameter("city");
+        String state = request.getParameter("state");
+        String country = request.getParameter("country");
+
+        // Retrieving Education Information
+        String highestQualification = request.getParameter("qualification");
+        int passoutYear = 0;
+        float percentage = 0.0f;
+        
+        // Retrieving Family Details
+        String fatherName = request.getParameter("fatherName");
+        String motherName = request.getParameter("motherName");
+        String numberOfSiblings = request.getParameter("siblings");
+
+        // Parsing passoutYear to int and percentage to float with error handling
+        try {
+            passoutYear = Integer.parseInt(request.getParameter("passoutYear"));
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid passout year format. Setting default value 0.");
+        }
+
+        try {
+            percentage = Float.parseFloat(request.getParameter("percentage"));
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid percentage format. Setting default value 0.0.");
+        }
+
+        response.setContentType("text/html");
+        PrintWriter out = response.getWriter();
+
+        out.println("<html><body>");
+        out.println("<h2>Form Submission Details</h2>");
+
+        // Displaying Address Information
+        out.println("<h3>Address Information</h3>");
+        out.println("<p><strong>City:</strong> " + city + "</p>");
+        out.println("<p><strong>State:</strong> " + state + "</p>");
+        out.println("<p><strong>Country:</strong> " + country + "</p>");
+
+        // Displaying Education Information
+        out.println("<h3>Education Information</h3>");
+        out.println("<p><strong>Highest Qualification:</strong> " + highestQualification + "</p>");
+        out.println("<p><strong>Passout Year:</strong> " + passoutYear + "</p>");
+        out.println("<p><strong>Percentage:</strong> " + percentage + "%</p>");
+
+        // Displaying Family Details
+        out.println("<h3>Family Details</h3>");
+        out.println("<p><strong>Father's Name:</strong> " + fatherName + "</p>");
+        out.println("<p><strong>Mother's Name:</strong> " + motherName + "</p>");
+        out.println("<p><strong>Number of Siblings:</strong> " + numberOfSiblings + "</p>");
+
+        // Logout Button
+        out.println("<br><br>");
+        out.println("<form action='login.html'>");
+        out.println("<input type='submit' value='Logout' style='padding: 10px 20px; font-size: 16px; background-color: #dc3545; color: white; border: none; cursor: pointer;'>");
+        out.println("</form>");
+
+        out.println("</body></html>");
+        out.close();
+    }
+}

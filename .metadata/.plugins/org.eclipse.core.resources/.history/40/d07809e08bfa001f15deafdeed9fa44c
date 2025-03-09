@@ -1,0 +1,41 @@
+
+package perform;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+@WebServlet("/Resetname")
+public class ResetName extends HttpServlet {
+    private static final long serialVersionUID = 1L;
+       
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        String NewPassword = request.getParameter("New Password"); 
+        String ConfirmPassword = request.getParameter("Confirm Password");
+     
+        response.setContentType("text/html");
+        PrintWriter out = response.getWriter();
+
+
+        if("rahul".equals(NewPassword) && "rahul".equals(ConfirmPassword)) {
+            out.println("<html><body>");
+            out.println("<h2>Password Reset Successful</h2>");
+            out.println("<h3>Form Submission Details</h3>");
+            out.println("<p>New Password: " + NewPassword + "</p>");
+            out.println("<p>Confirm Password: " + ConfirmPassword + "</p>");
+            out.println("</body></html>");
+            System.out.println("Password reset successful for password: " + NewPassword);
+        } else {
+            out.println("<html><body>");
+            out.println("<h2>Invalid Credentials</h2>");
+            out.println("</body></html>");
+            System.out.println("Password reset failed. Provided newPassword: " + ConfirmPassword);
+        }
+        out.close();
+    }
+}

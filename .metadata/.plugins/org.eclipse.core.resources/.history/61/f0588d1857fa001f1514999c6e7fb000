@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reset Password</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .password-container {
+            position: relative;
+            display: flex;
+        }
+        .toggle-password {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+        button {
+            background-color: #007BFF;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+        }
+        button:disabled {
+            background-color: #ccc;
+        }
+        #message {
+            margin-top: 10px;
+            font-size: 14px;
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Reset Password</h2>
+        <form id="reset-password-form">
+            <label>Email:</label>
+            <input type="email" id="email" name="email" readonly>
+
+            <label>New Password:</label>
+            <div class="password-container">
+                <input type="password" id="newPassword" name="newPassword" required>
+                <span class="toggle-password" onclick="togglePassword('newPassword')">👁️</span>
+            </div>
+
+            <label>Confirm Password:</label>
+            <div class="password-container">
+                <input type="password" id="confirmPassword" name="confirmPassword" required>
+                <span class="toggle-password" onclick="togglePassword('confirmPassword')">👁️</span>
+            </div>
+
+            <button type="submit">Reset Password</button>
+        </form>
+        <p id="message"></p>
+    </div>
+
+    <script>
+        // Get email from URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const email = urlParams.get("email") || "user@example.com";
+        document.getElementById("email").value = email;
+
+        // Function to toggle password visibility
+        function togglePassword(fieldId) {
+            const passwordField = document.getElementById(fieldId);
+            passwordField.type = passwordField.type === "password" ? "text" : "password";
+        }
+
+        document.getElementById("reset-password-form").addEventListener("submit", async function(event) {
+            event.preventDefault();
+
+            const newPassword = document.getElementById("newPassword").value;
+            const confirmPassword = document.getElementById("confirmPassword").value;
+            const message = document.getElementById("message");
+
+            // Password validation
+            if (newPassword.length < 8) {
+                message.textContent = "Password must be at least 8 characters long.";
+                return;
+            }
+            if (!/[A-Z]/.test(newPassword)) {
+                message.textContent = "Password must contain at least one uppercase letter.";
+                return;
+            }
+            if (!/[0-9]/.test(newPassword)) {
+                message.textContent = "Password must contain at least one number.";
+                return;
+            }
+            if (!/[^A-Za-z0-9]/.test(newPassword)) {
+                message.textContent = "Password must contain at least one special character.";
+                return;
+            }
+            if (newPassword !== confirmPassword) {
+                message.textContent = "Passwords do not match!";
+                return;
+            }
+
+            try {
+                const response = await fetch("/reset-password", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ email, newPassword }),
+                });
+
+                const result = await response.json();
+                message.textContent = result.message;
+                message.style.color = response.ok ? "green" : "red";
+            } catch (error) {
+                message.textContent = "An error occurred. Please try again.";
+                message.style.color = "red";
+            }
+        });
+    </script>
+</body>
+</html>

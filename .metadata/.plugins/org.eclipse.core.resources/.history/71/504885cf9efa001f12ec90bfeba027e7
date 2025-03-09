@@ -1,0 +1,75 @@
+package perform;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+@WebServlet("/dashboard")
+public class dashboard extends HttpServlet {
+    private static final long serialVersionUID = 1L;
+       
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        
+        // Retrieving user details from the request
+        String city = request.getParameter("city");
+        String state = request.getParameter("state");
+        String country = request.getParameter("country");
+        String highestQualification = request.getParameter("highestQualification");
+        String passoutYear = request.getParameter("passoutYear");
+        String percentage = request.getParameter("percentage");
+        String fatherName = request.getParameter("fatherName");
+        String motherName = request.getParameter("motherName");
+        String numberOfSiblings = request.getParameter("numberOfSiblings");
+
+        // Expected values
+        String expectedCity = "ongole";
+        String expectedState = "ap";
+        String expectedCountry = "india";
+        String expectedHighestQualification = "btech";
+        String expectedPassoutYear = "2023";
+        String expectedPercentage = "8.9";
+        String expectedFatherName = "prasadu";
+        String expectedMotherName = "padma";
+        String expectedNumberOfSiblings = "2";
+
+        response.setContentType("text/html");
+        PrintWriter out = response.getWriter();
+
+        out.println("<html><body>");
+
+        if (city.equals(expectedCity) && 
+            state.equals(expectedState) && 
+            country.equals(expectedCountry) && 
+            highestQualification.equals(expectedHighestQualification) && 
+            passoutYear.equals(expectedPassoutYear) && 
+            percentage.equals(expectedPercentage) && 
+            fatherName.equals(expectedFatherName) && 
+            motherName.equals(expectedMotherName) && 
+            numberOfSiblings.equals(expectedNumberOfSiblings)) {
+
+            out.println("<h2>Details Matched Successfully</h2>");
+        } else {
+            out.println("<h2>Details Did Not Match</h2>");
+        }
+
+        // Displaying submitted details
+        out.println("<h3>Form Submission Details</h3>");
+        out.println("<p>City: " + city + "</p>");
+        out.println("<p>State: " + state + "</p>");
+        out.println("<p>Country: " + country + "</p>");
+        out.println("<p>Highest Qualification: " + highestQualification + "</p>");
+        out.println("<p>Passout Year: " + passoutYear + "</p>");
+        out.println("<p>Percentage: " + percentage + "</p>");
+        out.println("<p>Father's Name: " + fatherName + "</p>");
+        out.println("<p>Mother's Name: " + motherName + "</p>");
+        out.println("<p>Number of Siblings: " + numberOfSiblings + "</p>");
+
+        out.println("</body></html>");
+
+        out.close();
+    }
+}

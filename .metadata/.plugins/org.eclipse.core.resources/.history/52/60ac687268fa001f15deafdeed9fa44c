@@ -1,0 +1,139 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            height: 100vh;
+            margin: 0;
+        }
+        .sidebar {
+            width: 250px;
+            background: #007BFF;
+            color: white;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+        .sidebar a {
+            color: white;
+            text-decoration: none;
+            padding: 10px;
+            display: block;
+            margin: 5px 0;
+            border-radius: 5px;
+        }
+        .sidebar a:hover, .sidebar a.active {
+            background: white;
+            color: #007BFF;
+        }
+        .content {
+            flex: 1;
+            padding: 20px;
+            background: #f4f4f4;
+        }
+        .form-container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            margin: auto;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar Menu -->
+    <div class="sidebar">
+        <h2>Dashboard</h2>
+        <a href="#" class="menu-item active" onclick="showSection('address')">🏡 Address</a>
+        <a href="#" class="menu-item" onclick="showSection('education')">🎓 Education</a>
+        <a href="#" class="menu-item" onclick="showSection('family')">👨‍👩‍👧‍👦 Family Details</a>
+        <a href="login.html" class="menu-item">🚪 Logout</a>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content">
+        
+        <!-- Address Section -->
+        <div id="address" class="form-container">
+            <h2>Address Details</h2>
+            <form>
+                <input type="text" placeholder="City" required>
+                <input type="text" placeholder="State" required>
+                <input type="text" placeholder="Country" required>
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+
+        <!-- Education Section -->
+        <div id="education" class="form-container hidden">
+            <h2>Education Details</h2>
+            <form>
+                <input type="text" placeholder="Highest Qualification" required>
+                <input type="number" placeholder="Passout Year" required>
+                <input type="number" step="0.1" placeholder="Percentage in Highest Qualification" required>
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+
+        <!-- Family Details Section -->
+        <div id="family" class="form-container hidden">
+            <h2>Family Details</h2>
+            <form>
+                <input type="text" placeholder="Father's Name" required>
+                <input type="text" placeholder="Mother's Name" required>
+                <input type="number" placeholder="Number of Siblings" required>
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+
+    </div>
+
+    <script>
+        function showSection(sectionId) {
+            document.querySelectorAll('.form-container').forEach(section => {
+                section.classList.add('hidden');
+            });
+
+            document.getElementById(sectionId).classList.remove('hidden');
+
+            document.querySelectorAll('.menu-item').forEach(item => {
+                item.classList.remove('active');
+            });
+
+            event.target.classList.add('active');
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,56 @@
+package perform;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+@WebServlet("/email")
+public class email extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+   
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		String firstname = request.getParameter("firstname");
+        String lastname = request.getParameter("lastname");
+        String email = request.getParameter("email"); 
+        String password = request.getParameter("password");
+        String gender = request.getParameter("gender"); 
+
+       
+        response.setContentType("text/html");
+        
+    
+        @SuppressWarnings("unused")
+		PrintWriter out = response.getWriter();
+
+        response.getWriter().write("login succeful");
+
+       
+
+		if("rahulmadasu2000@gmail.com".equals("email")||"password".equals("password"))
+		{
+			System.out.println("login succeful");
+			
+			 System.out.println("<html><body>");
+		        System.out.println("<h2>Form Submission Details</h2>");
+		        System.out.println("<p>First Name: " + firstname + "</p>");
+		        System.out.println("<p>Last Name: " + lastname + "</p>");
+		        System. out.println("<p>Email: " + email + "</p>");
+		        System.out.println("<p>Password: " + password + "</p>");
+		        System.out.println("<p>Gender: " + gender + "</p>");
+		        System.out.println("</body></html>");
+		}
+		else
+		{
+		System.out.println("Invalid Credentials");	
+		}
+		
+        System.out.close();
+    }
+}

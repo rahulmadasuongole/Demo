@@ -1,0 +1,137 @@
+package perform;
+
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
+import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.context.annotation.Bean;
+import jakarta.persistence.*;
+
+@SpringBootApplication
+public class DashboardApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(DashboardApplication.class, args);
+    }
+}
+
+// ========================== [ ENTITY CLASSES ] ===========================
+
+// Address Entity
+@Entity
+class Address {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String city;
+    private String state;
+    private String country;
+
+    // Getters and Setters
+}
+
+// Education Entity
+@Entity
+class Education {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String highestQualification;
+    private int passoutYear;
+    private double percentage;
+
+    // Getters and Setters
+}
+
+// FamilyDetails Entity
+@Entity
+class FamilyDetails {
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String fatherName;
+    private String motherName;
+    private int siblings;
+
+    // Getters and Setters
+}
+
+// ========================== [ REPOSITORIES ] ===========================
+
+@Repository
+interface AddressRepository extends JpaRepository<Address, Long> {}
+
+@Repository
+interface EducationRepository extends JpaRepository<Education, Long> {}
+
+@Repository
+interface FamilyRepository extends JpaRepository<FamilyDetails, Long> {}
+
+// ========================== [ SERVICES ] ===========================
+
+@Service
+class DashboardService {
+    @Autowired private AddressRepository addressRepo;
+    @Autowired private EducationRepository educationRepo;
+    @Autowired private FamilyRepository familyRepo;
+
+    public Address saveAddress(Address address) { return addressRepo.save(address); }
+    public Education saveEducation(Education education) { return educationRepo.save(education); }
+    public FamilyDetails saveFamily(FamilyDetails family) { return familyRepo.save(family); }
+}
+
+// ========================== [ CONTROLLERS ] ===========================
+
+@RestController
+@RequestMapping("/dashboard")
+class DashboardController {
+    @Autowired private DashboardService dashboardService;
+
+    // Save Address
+    @PostMapping("/address")
+    public ResponseEntity<String> saveAddress(@RequestBody Address address) {
+        dashboardService.saveAddress(address);
+        return ResponseEntity.ok("Address saved successfully!");
+    }
+
+    // Save Education Details
+    @PostMapping("/education")
+    public ResponseEntity<String> saveEducation(@RequestBody Education education) {
+        dashboardService.saveEducation(education);
+        return ResponseEntity.ok("Education details saved successfully!");
+    }
+
+    // Save Family Details
+    @PostMapping("/family")
+    public ResponseEntity<String> saveFamily(@RequestBody FamilyDetails family) {
+        dashboardService.saveFamily(family);
+        return ResponseEntity.ok("Family details saved successfully!");
+    }
+
+    // Logout Endpoint
+    @GetMapping("/logout")
+    public ResponseEntity<String> logout(Authentication authentication) {
+        if (authentication != null) {
+            new SecurityContextLogoutHandler().logout(null, null, authentication);
+        }
+        return ResponseEntity.ok("Logged out successfully!");
+    }
+}
+
+// ========================== [ SECURITY CONFIGURATION ] ===========================
+
+@Configuration
+@EnableWebSecurity
+class SecurityConfig {
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        return http
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/dashboard/**
+
+}

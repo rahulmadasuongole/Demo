@@ -1,0 +1,35 @@
+package perform;
+
+import java.io.IOException;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+@WebServlet("/Forgot")
+public class Forgot extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		response.getWriter().write("login succeful");
+
+		String username=request.getParameter("enter the email");
+
+		response.setContentType("text/html");
+
+
+		if("rahulmadasu2000@gmail.com".equals("email"))
+		{
+			System.out.println("login succeful");
+		}
+
+		else
+		{
+		System.out.println("Invalid Credentials");	
+		}
+		
+		
+	}
+
+}

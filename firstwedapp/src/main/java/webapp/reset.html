@@ -1,0 +1,98 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reset Password</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f4f4f4;
+      margin: 0;
+    }
+    .container {
+      background: white;
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+      width: 400px;
+      text-align: center;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      background-color: #007BFF;
+      color: white;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      width: 100%;
+      font-size: 16px;
+    }
+    button:disabled {
+      background-color: #ccc;
+    }
+    #message {
+      margin-top: 10px;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Reset Password</h2>
+    <p>Enter your new password below.</p>
+    <form id="reset-password-form" action="Resetname" method="get">
+      <input type="password" id="password" name="password" placeholder="New Password" required>
+      <input type="password" id="confirm-password" name="confirm-password" placeholder="Confirm Password" required>
+      <button type="submit" id="submit-btn">Reset Password</button>
+    </form>
+    <p id="message"></p>
+  </div>
+
+  <script>
+
+
+    document.getElementById("reset-password-form").addEventListener("submit", function(event) {
+      event.preventDefault();
+      
+      const password = document.getElementById("password").value;
+      const confirmPassword = document.getElementById("confirm-password").value;
+      const message = document.getElementById("message");
+      
+      if (password !== confirmPassword) {
+        message.textContent = "Passwords do not match.";
+        message.style.color = "red";
+        return;
+      }
+      
+
+
+      const url = `Resetname?password=${encodeURIComponent(password)}&confirm-password=${encodeURIComponent(confirmPassword)}`;
+      
+      fetch(url)
+        .then(response => response.text())
+        .then(data => {
+
+
+          document.body.innerHTML = data;
+        })
+        .catch(err => {
+          message.textContent = "An error occurred. Please try again.";
+          message.style.color = "red";
+        });
+    });
+  </script>
+</body>
+</html>

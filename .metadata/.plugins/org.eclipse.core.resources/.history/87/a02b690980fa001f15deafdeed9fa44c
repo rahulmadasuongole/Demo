@@ -1,0 +1,41 @@
+
+
+package perform;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+@WebServlet("/resetName")
+public class ResetName extends HttpServlet {
+    private static final long serialVersionUID = 1L;
+       
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // Set the content type of the response to HTML
+        response.setContentType("text/html");
+        PrintWriter out = response.getWriter();
+
+        // Retrieve newName and confirmName from the request parameters
+        String newName = request.getParameter("newName");
+        String confirmName = request.getParameter("confirmName");
+        
+        // Check if both names are provided and match
+        if(newName != null && confirmName != null && newName.equals(confirmName)) {
+            out.println("<html><body>");
+            out.println("<h2>Reseted password</h2>");
+            out.println("<p>Saved Name: " + newName + "</p>");
+            out.println("</body></html>");
+            System.out.println("Reseted password for name: " + newName);
+        } else {
+            out.println("<html><body>");
+            out.println("<h2>Not reset password</h2>");
+            out.println("</body></html>");
+            System.out.println("Names do not match or are missing: newName=" + newName + ", confirmName=" + confirmName);
+        }
+        out.close();
+    }
+}

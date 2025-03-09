@@ -1,0 +1,113 @@
+package perform;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
+
+@SpringBootApplication
+@RestController
+@RequestMapping("/dashboard")
+@CrossOrigin(origins = "*")  // Enable CORS for frontend integration
+public class DashboardApplication {
+
+    private final Map<String, Object> userData = new HashMap<>(); // In-memory storage (Replace with DB)
+
+    public static void main(String[] args) {
+        SpringApplication.run(DashboardApplication.class, args);
+    }
+
+    // ✅ Address Screen API
+    @PostMapping("/address")
+    public ApiResponse saveAddress(@RequestBody AddressRequest address) {
+        userData.put("address", address);
+        return new ApiResponse("Address saved successfully!");
+    }
+
+    // ✅ Education API
+    @PostMapping("/education")
+    public ApiResponse saveEducation(@RequestBody EducationRequest education) {
+        userData.put("education", education);
+        return new ApiResponse("Education details saved successfully!");
+    }
+
+    // ✅ Family Details API
+    @PostMapping("/family")
+    public ApiResponse saveFamilyDetails(@RequestBody FamilyRequest family) {
+        userData.put("family", family);
+        return new ApiResponse("Family details saved successfully!");
+    }
+
+    // ✅ Logout API
+    @PostMapping("/logout")
+    public ApiResponse logout() {
+        userData.clear();
+        return new ApiResponse("Logged out successfully!");
+    }
+
+    // ✅ Fetch User Data (For Testing)
+    @GetMapping("/data")
+    public Map<String, Object> getUserData() {
+        return userData;
+    }
+}
+
+// ✅ API Response Wrapper
+class ApiResponse {
+    private String message;
+    
+    public ApiResponse(String message) {
+        this.message = message;
+    }
+    
+    public String getMessage() {
+        return message;
+    }
+}
+
+// ✅ Address DTO
+class AddressRequest {
+    private String city;
+    private String state;
+    private String country;
+
+    // Getters and Setters
+    public String getCity() { return city; }
+    public void setCity(String city) { this.city = city; }
+    public String getState() { return state; }
+    public void setState(String state) { this.state = state; }
+    public String getCountry() { return country; }
+    public void setCountry(String country) { this.country = country; }
+}
+
+// ✅ Education DTO
+class EducationRequest {
+    private String highestQualification;
+    private String passoutYear;
+    private String percentage;
+
+    // Getters and Setters
+    public String getHighestQualification() { return highestQualification; }
+    public void setHighestQualification(String highestQualification) { this.highestQualification = highestQualification; }
+    public String getPassoutYear() { return passoutYear; }
+    public void setPassoutYear(String passoutYear) { this.passoutYear = passoutYear; }
+    public String getPercentage() { return percentage; }
+    public void setPercentage(String percentage) { this.percentage = percentage; }
+}
+
+// ✅ Family DTO
+class FamilyRequest {
+    private String fatherName;
+    private String motherName;
+    private int siblings;
+
+    // Getters and Setters
+    public String getFatherName() { return fatherName; }
+    public void setFatherName(String fatherName) { this.fatherName = fatherName; }
+    public String getMotherName() { return motherName; }
+    public void setMotherName(String motherName) { this.motherName = motherName; }
+    public int getSiblings() { return siblings; }
+    public void setSiblings(int siblings) { this.siblings = siblings; }
+}

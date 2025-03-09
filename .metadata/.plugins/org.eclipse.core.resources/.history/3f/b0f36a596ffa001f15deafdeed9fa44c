@@ -1,0 +1,38 @@
+
+package perform;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+@WebServlet("/loginfrom")
+public class loginfrom extends HttpServlet {
+    private static final long serialVersionUID = 1L;
+       
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // Retrieve username and password parameters from the request
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+
+        // Set the response content type
+        response.setContentType("text/html");
+        PrintWriter out = response.getWriter();
+
+        // Define expected credentials (these should normally come from a secure source, e.g., a database)
+        String expectedUsername = "rahulmadasu2000@gmail.com";
+        String expectedPassword = "yourPassword";  // Replace with the actual expected password
+
+        // Check if the credentials are valid
+        if(expectedUsername.equals(username) && expectedPassword.equals(password)) {
+            out.write("Login successful");
+            System.out.println("Login successful for user: " + username);
+        } else {
+            out.write("Invalid Credentials");
+            System.out.println("Invalid Credentials for user: " + username);
+        }
+    }
+}

@@ -1,0 +1,46 @@
+package perform;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+/**
+ * Servlet implementation class email
+ */
+@WebServlet("/email")
+public class email extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+       
+   
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		String firstname = request.getParameter("firstname");
+        String lastname = request.getParameter("lastname");
+        String email = request.getParameter("email"); 
+        String password = request.getParameter("password");
+        String gender = request.getParameter("gender"); 
+
+       
+        response.setContentType("text/html");
+        
+    
+        PrintWriter out = response.getWriter();
+
+        // Display the received data
+        System.out.println("<html><body>");
+        System.out.println("<h2>Form Submission Details</h2>");
+        System.out.println("<p>First Name: " + firstname + "</p>");
+        System.out.println("<p>Last Name: " + lastname + "</p>");
+        System. out.println("<p>Email: " + email + "</p>");
+        System.out.println("<p>Password: " + password + "</p>");
+        System.out.println("<p>Gender: " + gender + "</p>");
+        System.out.println("</body></html>");
+
+        System.out.close();
+    }
+}

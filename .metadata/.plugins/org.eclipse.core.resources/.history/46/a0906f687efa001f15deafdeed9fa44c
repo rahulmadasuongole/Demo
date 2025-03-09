@@ -1,0 +1,45 @@
+
+
+package perform;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+@WebServlet("/resetName")
+public class ResetName extends HttpServlet {
+    private static final long serialVersionUID = 1L;
+       
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // Set the content type to HTML
+        response.setContentType("text/html");
+        PrintWriter out = response.getWriter();
+
+        // Retrieve newName and confirmName from the request parameters
+        String newName = request.getParameter("newName");
+        String confirmName = request.getParameter("confirmName");
+
+        // For this example, we expect both newName and confirmName to be "rahul"
+        String expectedName = "rahul";
+
+        // Check if both names are provided and match the expected value
+        if(expectedName.equals(newName) && expectedName.equals(confirmName)) {
+            out.println("<html><body>");
+            out.println("<h2>Reset your password</h2>");
+            out.println("<p>New Name: " + newName + "</p>");
+            out.println("<p>Confirm Name: " + confirmName + "</p>");
+            out.println("</body></html>");
+            System.out.println("Reset your password for user: " + newName);
+        } else {
+            out.println("<html><body>");
+            out.println("<h2>Not reset your password</h2>");
+            out.println("</body></html>");
+            System.out.println("Name mismatch: newName=" + newName + " , confirmName=" + confirmName);
+        }
+        out.close();
+    }
+}

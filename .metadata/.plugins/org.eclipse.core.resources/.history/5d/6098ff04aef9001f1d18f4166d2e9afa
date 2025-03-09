@@ -1,0 +1,56 @@
+
+
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+@WebServlet("/LoginServlet")
+public class LoginServlet extends HttpServlet {
+    private static final long serialVersionUID = 1L;
+    
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType("text/html");
+        PrintWriter out = response.getWriter();
+        out.println("<!DOCTYPE html>");
+        out.println("<html lang='en'>");
+        out.println("<head>");
+        out.println("<meta charset='UTF-8'>");
+        out.println("<meta name='viewport' content='width=device-width, initial-scale=1.0'>");
+        out.println("<title>Login Page</title>");
+        out.println("<style>");
+        out.println("body { font-family: Arial, sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #f4f4f4; }");
+        out.println(".login-container { background: white; padding: 20px; border-radius: 8px; box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1); text-align: center; }");
+        out.println(".login-container input { width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 5px; }");
+        out.println(".login-container button { width: 100%; padding: 10px; background: #28a745; color: white; border: none; border-radius: 5px; cursor: pointer; }");
+        out.println(".login-container a { display: block; margin-top: 10px; color: #007bff; text-decoration: none; }");
+        out.println("</style>");
+        out.println("</head>");
+        out.println("<body>");
+        out.println("<div class='login-container'>");
+        out.println("<h2>Login</h2>");
+        out.println("<form method='post' action='LoginServlet'>");
+        out.println("<input type='email' name='email' placeholder='Email' required>");
+        out.println("<input type='password' name='password' placeholder='Password' required>");
+        out.println("<button type='submit'>Login</button>");
+        out.println("</form>");
+        out.println("<a href='#'>Forgot Password?</a>");
+        out.println("<a href='#'>Sign Up</a>");
+        out.println("</div>");
+        out.println("</body>");
+        out.println("</html>");
+    }
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String email = request.getParameter("email");
+        String password = request.getParameter("password");
+        // Here, you can add authentication logic
+        response.setContentType("text/html");
+        PrintWriter out = response.getWriter();
+        out.println("<h2>Login Successful for: " + email + "</h2>");
+    }
+}

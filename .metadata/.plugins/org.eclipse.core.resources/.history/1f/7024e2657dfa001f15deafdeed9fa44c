@@ -1,0 +1,40 @@
+
+package perform;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+@WebServlet("/resetPassword")
+public class resetPassword extends HttpServlet {
+    private static final long serialVersionUID = 1L;
+       
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // Set response type to HTML
+        response.setContentType("text/html");
+        PrintWriter out = response.getWriter();
+        
+        // Retrieve new password and confirm password from request parameters
+        String newPassword = request.getParameter("newPassword");
+        String confirmPassword = request.getParameter("confirmPassword");
+        
+        // Check if the passwords are non-null and match
+        if(newPassword != null && confirmPassword != null && newPassword.equals(confirmPassword)) {
+            out.println("<html><body>");
+            out.println("<h2>Reset your password</h2>");
+            out.println("</body></html>");
+            System.out.println("Password reset successful.");
+        } else {
+            out.println("<html><body>");
+            out.println("<h2>Not reset your password</h2>");
+            out.println("</body></html>");
+            System.out.println("Password reset failed. Passwords do not match.");
+        }
+        out.close();
+    }
+}
+

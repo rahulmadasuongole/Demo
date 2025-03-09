@@ -1,0 +1,37 @@
+package perform;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+@WebServlet("/LoginServlet")
+public class LoginServlet extends HttpServlet {
+    private static final long serialVersionUID = 1L;
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("text/html");
+        PrintWriter out = response.getWriter();
+        
+        // Sample Hardcoded User
+        String validEmail = "admin@example.com";
+        String validPassword = "password123";
+        
+        // Get email and password from the request
+        String email = request.getParameter("email");
+        String password = request.getParameter("password");
+
+        // Authentication Logic
+        if (validEmail.equals(email) && validPassword.equals(password)) {
+            out.println("<h3>Login Successful!</h3>");
+            out.println("<p>Welcome, " + email + ".</p>");
+        } else {
+            out.println("<h3>Login Failed! Invalid credentials.</h3>");
+            out.println("<a href='index.html'>Try Again</a>");
+        }
+    }
+}
